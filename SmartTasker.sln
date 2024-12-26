@@ -1,6 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartTasker.Infrastructure.Api", "SmartTasker.Infrastructure.Api\SmartTasker.Infrastructure.Api.csproj", "{C535D906-F4B0-4881-991E-D8CEB8E32560}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D12A0900-3339-4D83-BE6A-3D3C0FCE30D0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{3B3EFD85-FCBB-4544-901A-B1637D9DC60E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasker.Api", "src\Infrastructure\Tasker.Api\Tasker.Api.csproj", "{A974E8E8-A652-4B3C-80A4-87C83002BA66}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasker.Discord", "src\Infrastructure\Tasker.Discord\Tasker.Discord.csproj", "{7F471590-E208-4223-93F9-7425BA58913F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4CB55A14-0F33-49D9-974F-A0494202133B}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+		.env = .env
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,9 +20,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C535D906-F4B0-4881-991E-D8CEB8E32560}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C535D906-F4B0-4881-991E-D8CEB8E32560}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C535D906-F4B0-4881-991E-D8CEB8E32560}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C535D906-F4B0-4881-991E-D8CEB8E32560}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A974E8E8-A652-4B3C-80A4-87C83002BA66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A974E8E8-A652-4B3C-80A4-87C83002BA66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A974E8E8-A652-4B3C-80A4-87C83002BA66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A974E8E8-A652-4B3C-80A4-87C83002BA66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F471590-E208-4223-93F9-7425BA58913F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F471590-E208-4223-93F9-7425BA58913F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F471590-E208-4223-93F9-7425BA58913F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F471590-E208-4223-93F9-7425BA58913F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3B3EFD85-FCBB-4544-901A-B1637D9DC60E} = {D12A0900-3339-4D83-BE6A-3D3C0FCE30D0}
+		{A974E8E8-A652-4B3C-80A4-87C83002BA66} = {3B3EFD85-FCBB-4544-901A-B1637D9DC60E}
+		{7F471590-E208-4223-93F9-7425BA58913F} = {3B3EFD85-FCBB-4544-901A-B1637D9DC60E}
 	EndGlobalSection
 EndGlobal
