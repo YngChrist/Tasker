@@ -17,7 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Commands\" />
+      <ProjectReference Include="..\Tasker.Refit\Tasker.Refit.csproj" />
     </ItemGroup>
 
 </Project>

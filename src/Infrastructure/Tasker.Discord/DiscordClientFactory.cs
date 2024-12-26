@@ -4,9 +4,11 @@ using DSharpPlus.SlashCommands;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Tasker.Discord.Commands;
 using Tasker.Discord.Components;
 using Tasker.Discord.Models;
 using Tasker.Discord.Responses;
+using Tasker.Refit;
 
 namespace Tasker.Discord;
 
@@ -42,12 +44,7 @@ public static class DiscordClientFactory
             {
                 Token = discordSettings.Token,
                 TokenType = TokenType.Bot,
-                Intents = DiscordIntents.AllUnprivileged |
-                          DiscordIntents.GuildVoiceStates |
-                          DiscordIntents.GuildMessages |
-                          DiscordIntents.MessageContents |
-                          DiscordIntents.Guilds |
-                          DiscordIntents.GuildPresences,
+                Intents = DiscordIntents.All,
                 LoggerFactory = provider.GetRequiredService<ILoggerFactory>(),
                 HttpTimeout = TimeSpan.FromSeconds(30)
             };
@@ -59,7 +56,7 @@ public static class DiscordClientFactory
                 Services = provider
             });
 
-            slashCommands.RegisterCommands(typeof(DiscordClientFactory).Assembly);
+            slashCommands.RegisterCommands<TestCommands>();
 
             // Обработка взаимодействия с компонентом
             client.ComponentInteractionCreated += async (discordClient, args) =>

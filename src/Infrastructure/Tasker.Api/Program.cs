@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
         .AddLogging(builder.Logging)
         .AddApplication()
         .AddWeb()
+        .AddInfrastructure(builder.Configuration)
         .AddDiscordClient(builder.Configuration)
         .AddHostedService<DiscordBotService>();
 }

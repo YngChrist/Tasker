@@ -1,6 +1,8 @@
-﻿using Serilog;
+﻿using Refit;
+using Serilog;
 using Tasker.Discord.Components;
 using Tasker.Discord.Models;
+using Tasker.Refit;
 
 namespace Tasker.Api.Common.Extensions;
 
@@ -31,6 +33,24 @@ public static class ServiceExtensions
     public static IServiceCollection AddConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<DiscordSettings>(configuration.GetSection("Discord"));
+
+        return services;
+    }
+    
+    /// <summary>
+    /// Настройка конфигурации.
+    /// </summary>
+    /// <param name="services">Коллекция сервисов.</param>
+    /// <param name="configuration">Конфигурация.</param>
+    /// <returns>Обновленная коллекция сервисов.</returns>
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    {
+        services
+            .AddRefitClient<INotificationService>()
+            .ConfigureHttpClient((provider, httpClient) =>
+            {
+                httpClient.BaseAddress = new Uri(configuration.GetConnectionString("n8n")!);
+            });
 
         return services;
     }

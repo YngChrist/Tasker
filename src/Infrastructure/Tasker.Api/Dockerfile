@@ -28,6 +28,7 @@ COPY --from=publish /app/publish .
 EXPOSE 80
 EXPOSE 443
 EXPOSE 5000/udp
-
+EXPOSE 8080
+EXPOSE 8081
 # Указываем команду запуска приложения
 ENTRYPOINT ["dotnet", "Tasker.Api.dll"]
