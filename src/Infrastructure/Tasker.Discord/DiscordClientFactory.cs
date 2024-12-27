@@ -70,6 +70,11 @@ public static class DiscordClientFactory
                 await componentService.Execute(discordClient, args);
             };
 
+            slashCommands.SlashCommandErrored += async (discordClient, args) =>
+            {
+                logger.LogTrace(args.Exception, args.Exception.Message);
+            };
+
             return client;
         });
 

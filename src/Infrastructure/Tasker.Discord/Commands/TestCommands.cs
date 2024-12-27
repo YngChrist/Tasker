@@ -1,23 +1,33 @@
 ﻿using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
-using Tasker.Refit;
+using Tasker.Application.Common.Webhooks;
 
 namespace Tasker.Discord.Commands;
 
 public class TestCommands : ApplicationCommandModule
 {
-    private readonly INotificationService _notificationService;
+    private readonly INotificationService _notifier;
 
-    public TestCommands(INotificationService notificationService)
+    public TestCommands(INotificationService notifier)
     {
-        _notificationService = notificationService;
+        _notifier = notifier;
     }
 
     [SlashCommand("testwebhook", "Тест хука")]
     public async Task TestWebhook(InteractionContext ctx)
     {
         await ctx.DeferAsync();
-        var result = await _notificationService.Test(15);
+        await _notifier.NotifyAsync("ping");
         await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent("Ping"));
+    }
+    
+    [SlashCommand("pdftest", "Тест хука")]
+    public async Task PdfTest(InteractionContext ctx)
+    {
+        await ctx.DeferAsync();
+        var path = "../../test.pdf";
+        new PdfReportGenerator().GenerateReport(path);
+        
+        await ctx.EditResponseAsync(new DiscordWebhookBuilder().AddFile(File.OpenRead(path)));
     }
 }

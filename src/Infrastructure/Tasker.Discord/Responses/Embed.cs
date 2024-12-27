@@ -77,4 +77,15 @@ public static class Embed
             .WithColor(DiscordColor.Green)
             .Build();
     }
+
+    public static DiscordEmbed ReportTitle(DateTime date)
+    {
+        return new DiscordEmbedBuilder()
+            .WithDescription($"""
+                              # Итоги за `{date.ToShortDateString()}`:
+                              {EmptySymbol}
+                              """)
+            .WithColor(DiscordColor.Green)
+            .Build();
+    }
 }

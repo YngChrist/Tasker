@@ -1,5 +1,6 @@
 ﻿using Refit;
 using Serilog;
+using Tasker.Application.Common.Webhooks;
 using Tasker.Discord.Components;
 using Tasker.Discord.Models;
 using Tasker.Refit;
@@ -46,7 +47,8 @@ public static class ServiceExtensions
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services
-            .AddRefitClient<INotificationService>()
+            .AddScoped<INotificationService, NotificationService>()
+            .AddRefitClient<INotifier>()
             .ConfigureHttpClient((provider, httpClient) =>
             {
                 httpClient.BaseAddress = new Uri(configuration.GetConnectionString("n8n")!);
