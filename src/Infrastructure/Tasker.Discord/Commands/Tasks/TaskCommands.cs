@@ -1,4 +1,5 @@
-﻿using DSharpPlus.SlashCommands;
+﻿using DSharpPlus.Entities;
+using DSharpPlus.SlashCommands;
 using Tasker.Application.Common.Model;
 
 namespace Tasker.Discord.Commands.Tasks;
@@ -14,10 +15,10 @@ public class TaskCommands : ApplicationCommandModule
 
     [SlashCommand("task", "Создать задачу и обработать ее через pipeline.")]
     public async Task TaskCommandAsync(InteractionContext ctx, 
-        [Option("project", "ads")] string project,
-        [Option("статус", "К какому статусу приведет выполнение")] string statusText,
-        [Option("текст", "текст задачи")] string taskText,
-        [Option("priority", "ads")] IssuePriority priority)
+        [Option("Проект", "Проект к которому относится задача", true), Autocomplete(typeof(ProjectAutocompleteProvider))] string project,
+        [Option("Статус", "К какому статусу приведет выполнение")] string statusText,
+        [Option("Текст", "Текст задачи")] string taskText,
+        [Option("Приоритет", "Приоритет задачи")] IssuePriority priority)
     {
         await ctx.DeferAsync();
 
