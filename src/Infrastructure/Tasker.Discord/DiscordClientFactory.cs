@@ -5,10 +5,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Tasker.Discord.Commands;
+using Tasker.Discord.Commands.Tasks;
 using Tasker.Discord.Components;
 using Tasker.Discord.Models;
 using Tasker.Discord.Responses;
-using Tasker.Refit;
 
 namespace Tasker.Discord;
 
@@ -57,6 +57,7 @@ public static class DiscordClientFactory
             });
 
             slashCommands.RegisterCommands<TestCommands>();
+            slashCommands.RegisterCommands<TaskCommands>();
 
             // Обработка взаимодействия с компонентом
             client.ComponentInteractionCreated += async (discordClient, args) =>

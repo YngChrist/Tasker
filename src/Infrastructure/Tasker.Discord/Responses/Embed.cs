@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using DSharpPlus.Entities;
+using Tasker.Application.Common.Model;
 
 namespace Tasker.Discord.Responses;
 
@@ -63,6 +64,25 @@ public static class Embed
             .WithTitle(title)
             .WithDescription(description)
             .WithColor(DiscordColor.Cyan)
+            .Build();
+    }
+    
+    /// <summary>
+    /// Создание ответа, содержащего информацию.
+    /// </summary>
+    /// <param name="title">Заголовок.</param>
+    /// <param name="description">Информация.</param>
+    /// <returns>Embed для отправки его в ответ.</returns>
+    public static DiscordEmbed TaskInfo(Issue issue)
+    {
+        return new DiscordEmbedBuilder()
+            .WithDescription($"""
+                              ## Задача по #[{issue.Project}] : 
+                               - Текст: **{issue.TaskText}**
+                              """)
+            .WithColor(DiscordColor.Green)
+            .AddField("Приоритет", $"{issue.Priority}", true)
+            .AddField("Статус", $"{issue.StatusText}", true)
             .Build();
     }
 

@@ -1,8 +1,13 @@
-﻿using Refit;
+﻿using DSharpPlus;
+using DSharpPlus.Entities;
+using DSharpPlus.EventArgs;
+using Refit;
 using Serilog;
 using Tasker.Application.Common.Webhooks;
+using Tasker.Discord.Commands.Tasks;
 using Tasker.Discord.Components;
 using Tasker.Discord.Models;
+using Tasker.Discord.Responses;
 using Tasker.Refit;
 
 namespace Tasker.Api.Common.Extensions;
@@ -20,8 +25,11 @@ public static class ServiceExtensions
     /// <returns>Обновленная коллекция сервисов.</returns>
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        services.AddUiComponents();
+        services
+            .AddUiComponents()
+            .AddSingleton<TaskCommandExecutor>();
 
+        
         return services;
     }
 
@@ -107,16 +115,46 @@ public static class ServiceExtensions
             var logger = provider.GetRequiredService<ILogger<ComponentService>>();
             var componentService = new ComponentService();
 
+            var taskService = provider.GetRequiredService<TaskCommandExecutor>();
             logger.LogDebug("Регистрация действий компонентов.");
             
-            componentService.RegisterComponent(UiComponent.StartTextRecordingButton, async (client, args) =>
+            componentService.RegisterComponent(UiComponent.TaskPrioritySelectMenu, async (client, args) =>
             {
-                logger.LogInformation("Вызвано действие компонента {Component}", nameof(UiComponent.StartTextRecordingButton));
-            });
+                logger.LogInformation("Вызвано действие компонента {Component}", nameof(UiComponent.TaskPrioritySelectMenu));
 
+                var sessionIdString = await GetField("Id:", args);
+                logger.LogInformation("Поле Id получено {IdValue}.", sessionIdString);
+
+                var value = args.Values.First();
+            });
+            
+            
             return componentService;
         });
 
         return services;
+    }
+
+    private static async Task<string> GetField(string fieldName, ComponentInteractionCreateEventArgs args)
+    {
+        var embed = args.Message.Embeds.FirstOrDefault();
+        if (embed == null)
+        {
+            await args.Interaction.EditOriginalResponseAsync(new DiscordWebhookBuilder()
+                .AddEmbed(Embed.Error("Ошибка при выполнении.")));
+
+            throw new Exception();
+        }
+
+        var idField = embed.Fields.FirstOrDefault(field => field.Name == fieldName);
+        if (idField == null)
+        {
+            await args.Interaction.EditOriginalResponseAsync(new DiscordWebhookBuilder()
+                .AddEmbed(Embed.Error("Ошибка при выполнении.")));
+
+            throw new Exception();
+        }
+
+        return idField.Value.Replace("```", "").Trim();
     }
 }
